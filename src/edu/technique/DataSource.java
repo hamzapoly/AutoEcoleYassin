@@ -29,7 +29,7 @@ public class DataSource {
 		// TODO Auto-generated constructor stub
 		try {
 			properties = new Properties();
-			properties.load(new FileInputStream(new File("configuration.properties")));
+			properties.load(new FileInputStream(new File("./resources/configuration.properties")));
 			url = properties.getProperty("url");
 			login = properties.getProperty("login");
 			password = properties.getProperty("password");

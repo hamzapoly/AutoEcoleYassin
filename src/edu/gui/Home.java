@@ -1,44 +1,27 @@
 package edu.gui;
 
-import java.applet.Applet;
+import java.awt.Color;
 import java.awt.EventQueue;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JTextField;
-import javax.swing.border.MatteBorder;
-
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.SystemColor;
-
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 
 import java.awt.Font;
 
-import javax.swing.border.BevelBorder;
-import javax.swing.SwingConstants;
-import javax.swing.JPasswordField;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class Home {
 
-	private JFrame frame;
-	private final JLabel lblNewLabel = new JLabel("مرحبا بكم");
-	private JTextField username;
-	private JPasswordField password;
+	private JFrame frame1;
+	public JFrame getFrame1() {
+		return frame1;
+	}
+
+	public void setFrame1(JFrame frame1) {
+		this.frame1 = frame1;
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -47,7 +30,7 @@ public class Home {
 			public void run() {
 				try {
 					Home window = new Home();
-					window.frame.setVisible(true);
+					window.frame1.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,101 +49,25 @@ public class Home {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Yassin");
-		frame.getContentPane().setForeground(new Color(139, 0, 139));
-		frame.getContentPane().setFont(new Font("Andalus", frame.getContentPane().getFont().getStyle(), frame.getContentPane().getFont().getSize()));
-		frame.setSize(1600, 900);
-		frame.setResizable(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frame1 = new JFrame();
+		frame1.getContentPane().setForeground(new Color(139, 0, 139));
+		frame1.getContentPane().setFont(new Font("Andalus", frame1.getContentPane().getFont().getStyle(), frame1.getContentPane().getFont().getSize()));
+		frame1.setSize(1600, 900);
+		frame1.setResizable(true);
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame1.getContentPane().setLayout(null);
 		JPanel panel = new JPanel( );
 		panel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 0, 128), new Color(255, 0, 255), new Color(0, 255, 255), new Color(0, 191, 255)));
 		panel.setBackground(new Color(230, 230, 250));
 		panel.setForeground(new Color(230, 230, 250));
 		panel.setBounds(0, 0, 0, 0);
 		panel.setLayout(null);
-		frame.getContentPane().add(panel);
-		JLabel lblNewLabel_1 = new JLabel("مرحبا بكم");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setForeground(new Color(220, 20, 60));
-		//lblNewLabel_1.setFont(new Font("Arabic Typesetting", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(1029, 85, 352, 115);
-		frame.getContentPane().add(lblNewLabel_1);
-		lblNewLabel_1.setForeground(new Color(220, 20, 60));
-		lblNewLabel_1.setFont(new Font("AL-Majd", lblNewLabel_1.getFont().getStyle() | Font.BOLD, 60));
-		
-		//USERNAME Field
-		username = new JTextField();
-		username.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				username.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-			}
-		});
-		username.addMouseListener(new MouseAdapter() {
-			public void mouseExited(MouseEvent e) {
-				username.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-			}
-		});
-		
-		JLabel label_1 = new JLabel("تسجيل الدخول ...");
-		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_1.setFont(new Font("Andalus", label_1.getFont().getStyle() | Font.BOLD, 28));
-		label_1.setForeground(Color.WHITE);
-		label_1.setBounds(1280, 286, 192, 33);
-		frame.getContentPane().add(label_1);
-		
-		JLabel label_2 = new JLabel("اسم المستخدم");
-		label_2.setFont(new Font("MO_Nawel", Font.BOLD, 20));
-		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_2.setForeground(Color.WHITE);
-		label_2.setBounds(1388, 327, 94, 33);
-		frame.getContentPane().add(label_2);
-		
-		JLabel label_3 = new JLabel("كلمة العبور");
-		label_3.setFont(new Font("MO_Nawel", Font.BOLD, 20));
-		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_3.setForeground(Color.WHITE);
-		label_3.setBounds(1367, 368, 115, 33);
-		frame.getContentPane().add(label_3);
-		
-		username.setBounds(1211, 330, 167, 33);
-		frame.getContentPane().add(username);
-		username.setColumns(10);
-		username.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-		//PASSWORD Field
-		password = new JPasswordField();
-		password.setBounds(1211, 371, 167, 33);
-		frame.getContentPane().add(password);
-		password.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				password.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-			}
-		});
-		password.addMouseListener(new MouseAdapter() {
-			public void mouseExited(MouseEvent e) {
-				password.setBorder(BorderFactory.createLineBorder(new Color(255,255,255), 1));
-			}
-		});
-		password.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-		
-		JButton btnNewButton = new JButton("دخول");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnNewButton.setFont(new Font("Mohammad Laha", Font.PLAIN, 17));
-		btnNewButton.setBounds(1211, 412, 89, 33);
-		frame.getContentPane().add(btnNewButton);
-		JLabel label = new JLabel("");
-		label.setBorder(BorderFactory.createRaisedBevelBorder());
-		label.setBounds(1188, 280, 361, 174);
-		frame.getContentPane().add(label);
-		
-		JLabel lblNewLabel_2 = new JLabel("");
+		frame1.getContentPane().add(panel);
+		final JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-		lblNewLabel_2.setIcon(new ImageIcon("D:\\ESPRIT\\WEB World\\WorkSpace\\YassinSchool\\src\\edu\\utils\\carinterior.jpg"));
+		lblNewLabel_2.setIcon(new ImageIcon("D:\\ESPRIT\\WEB World\\WorkSpace\\YassinSchool\\src\\edu\\utils\\home.jpg"));
 		lblNewLabel_2.setBounds(0, 0, 1584, 862);
-		frame.getContentPane().add(lblNewLabel_2);
+		frame1.getContentPane().add(lblNewLabel_2);
+
 	}
 }
