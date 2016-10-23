@@ -16,13 +16,17 @@ import java.awt.BorderLayout;
 
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
+import javax.swing.plaf.OptionPaneUI;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 import javax.swing.JLabel;
 
@@ -39,6 +43,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
+import com.sun.tools.internal.ws.processor.model.Message;
 import com.sun.tools.javac.util.Warner;
 
 import edu.dao.classes.UserDao;
@@ -49,7 +54,6 @@ import java.awt.event.ActionEvent;
 public class Index {
 
 	private JFrame frame;
-	private final JLabel lblNewLabel = new JLabel("مرحبا بكم");
 	private JTextField username;
 	private JPasswordField password;
 	/**
@@ -93,15 +97,15 @@ public class Index {
 		panel.setBounds(0, 0, 0, 0);
 		panel.setLayout(null);
 		frame.getContentPane().add(panel);
+		Insets insets = panel.getInsets();
 		JLabel lblNewLabel_1 = new JLabel("مرحبا بكم");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(new Color(220, 20, 60));
 		//lblNewLabel_1.setFont(new Font("Arabic Typesetting", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(1029, 85, 352, 115);
+		lblNewLabel_1.setBounds(700 , 70 + insets.top, 352, 115);
 		frame.getContentPane().add(lblNewLabel_1);
 		lblNewLabel_1.setForeground(new Color(220, 20, 60));
 		lblNewLabel_1.setFont(new Font("AL-Majd", lblNewLabel_1.getFont().getStyle() | Font.BOLD, 60));
-		
 		//USERNAME Field
 		username = new JTextField();
 		username.addMouseListener(new MouseAdapter() {
@@ -119,30 +123,30 @@ public class Index {
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_1.setFont(new Font("Andalus", label_1.getFont().getStyle() | Font.BOLD, 28));
 		label_1.setForeground(Color.WHITE);
-		label_1.setBounds(1280, 286, 192, 33);
+		label_1.setBounds(850 + insets.left, 280 + insets.top, 192, 33);
 		frame.getContentPane().add(label_1);
 		
 		JLabel label_2 = new JLabel("اسم المستخدم");
 		label_2.setFont(new Font("MO_Nawel", Font.BOLD, 20));
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_2.setForeground(Color.WHITE);
-		label_2.setBounds(1388, 327, 94, 33);
+		label_2.setBounds(1000 + insets.left, 330 + insets.top, 156, 33);
 		frame.getContentPane().add(label_2);
 		
 		JLabel label_3 = new JLabel("كلمة العبور");
 		label_3.setFont(new Font("MO_Nawel", Font.BOLD, 20));
 		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_3.setForeground(Color.WHITE);
-		label_3.setBounds(1367, 368, 115, 33);
+		label_3.setBounds(1000 + insets.left, 370 + insets.top, 146, 33);
 		frame.getContentPane().add(label_3);
 		
-		username.setBounds(1211, 330, 167, 33);
+		username.setBounds(870 + insets.left, 335 + insets.top, 167, 33);
 		frame.getContentPane().add(username);
 		username.setColumns(10);
 		username.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
 		//PASSWORD Field
 		password = new JPasswordField();
-		password.setBounds(1211, 371, 167, 33);
+		password.setBounds(870 + insets.left, 375 + insets.top, 167, 33);
 		frame.getContentPane().add(password);
 		password.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
@@ -155,46 +159,65 @@ public class Index {
 			}
 		});
 		password.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+		
 		JButton btnNewButton = new JButton("دخول");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton.setFont(new Font("Mohammad Laha", Font.PLAIN, 17));
-		btnNewButton.setBounds(1211, 412, 89, 33);
+		btnNewButton.setBounds(872, 421, 89, 33);
 		frame.getContentPane().add(btnNewButton);
-
 		JLabel label = new JLabel("");
 		label.setBorder(BorderFactory.createRaisedBevelBorder());
-		label.setBounds(1188, 280, 361, 174);
+		Dimension size = label.getPreferredSize();
+		label.setBounds(852, 322,
+	             318, 168);
 		frame.getContentPane().add(label);
-		final JOptionPane optionPane = new JOptionPane();
-		//lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		//lblNewLabel_3.setForeground(Color.RED);
-		//lblNewLabel_3.setBounds(1321, 423, 215, 14);
-		//frame.getContentPane().add(lblNewLabel_3);
-		//lblNewLabel_3.setEnabled(false);
 		
+		//JLabel label = new JLabel("");
+		//label.setBorder(BorderFactory.createRaisedBevelBorder());
+		//label.setBounds(1188, 280, 361, 174);
+		//frame.getContentPane().add(label);
+		final JOptionPane optionPane = new JOptionPane();
+		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+		Dimension dim = toolkit.getScreenSize();
+		int width = (int) dim.getWidth();
+		int height = (int) dim.getHeight();
+	
 		final JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-		lblNewLabel_2.setIcon(new ImageIcon("D:\\ESPRIT\\WEB World\\WorkSpace\\YassinSchool\\src\\edu\\utils\\carinterior.jpg"));
-		lblNewLabel_2.setBounds(0, 0, 1584, 862);
+		lblNewLabel_2.setIcon(new ImageIcon("./src/edu/utils/carinterior.jpg"));
+		lblNewLabel_2.setBounds(0, 0, width, height);
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		UIManager.put("OptionPane.font", new Font("Mohammad Laha", Font.BOLD, 50));	
 		final JLabel lblNewLabel_msg = new JLabel("الرجاء التثبت من البيانات");
-		lblNewLabel_msg.setFont(new Font("MO_Nawel",Font.CENTER_BASELINE,23));
+		lblNewLabel_msg.setHorizontalTextPosition(SwingConstants.LEFT);
+		lblNewLabel_msg.setAlignmentX(SwingConstants.RIGHT);
+		final ImageIcon stopicon = new ImageIcon("./src/edu/utils/errors/stopicon.png");
+		lblNewLabel_msg.setFont(new Font("MO_Nawel",Font.CENTER_BASELINE,18));
 		lblNewLabel_msg.setForeground(Color.red);
+		//lblNewLabel_msg.setIcon(stopicon);
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserDao userdao = new UserDao();
-				System.out.println(userdao.authentification(username.getText(), password.getText()));
-				if (userdao.authentification(username.getText(), password.getText())) {
-				System.out.println("Utilisateur existe");
+				 UIManager UI=new UIManager();
+				 UI.put("OptionPane.background", Color.white);
+				 UI.put("Panel.background", Color.white);
+				 
+				 if (userdao.authentification(username.getText(), password.getText())) {
 				frame.dispose();
 				Home window = new Home();
 				window.getFrame1().setVisible(true);
 				} 
 				else {
 					//lblNewLabel_3.setEnabled(true);
-					optionPane.showMessageDialog(null,lblNewLabel_msg,"Ouuups",optionPane.WARNING_MESSAGE);
+					//optionPane.showMessageDialog(null,lblNewLabel_msg,"Ouuups",optionPane.WARNING_MESSAGE);
+ 					 JOptionPane.showMessageDialog(null,lblNewLabel_msg,"",JOptionPane.INFORMATION_MESSAGE,stopicon);
+
 			 	}
 
 			}
