@@ -12,36 +12,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
 
-import com.sun.tools.javac.util.JCDiagnostic.Factory;
 
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
+
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.CardLayout;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.CompoundBorder;
-import javax.swing.JSplitPane;
-import javax.swing.JScrollBar;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class Home {
 
-	private JFrame frame1;
-	public JFrame getFrame1() {
-		return frame1;
-	}
-
-	public void setFrame1(JFrame frame1) {
-		this.frame1 = frame1;
-	}
+	private static JFrame frame1;
+	
 
 	/**
 	 * Launch the application.
@@ -65,6 +52,13 @@ public class Home {
 	public Home() {
 		initialize();
 	}
+	public JFrame getFrame1() {
+		return frame1;
+	}
+
+	public void setFrame1(JFrame frame1) {
+		this.frame1 = frame1;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -82,7 +76,7 @@ public class Home {
 		UI.put("OptionPane.background",borderc);
 		UI.put("Panel.background", borderc);
 
-		JPanel panel = new JPanel( );
+		final JPanel panel = new JPanel( );
 		//panel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 0, 128), new Color(255, 0, 255), new Color(0, 255, 255), new Color(0, 191, 255)));
 		panel.setBackground(Color.WHITE);
 		panel.setForeground(new Color(230, 230, 250));
@@ -114,6 +108,7 @@ public class Home {
 				label.setSize(120, 120);
 			}
 		});
+		
 		label.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new EtchedBorder(EtchedBorder.RAISED, null, null)));
 		label.setIcon(new ImageIcon("./src/edu/utils/tests1.png"));
 		label.setHorizontalTextPosition(JLabel.CENTER);
@@ -129,6 +124,16 @@ public class Home {
 			}
 			public void mouseExited(MouseEvent e) {
 				label_1.setSize(120, 120);
+			}
+			public void mouseClicked(MouseEvent e) {
+				try {
+					frame1.getContentPane().setVisible(false);
+					new Informationpanel().getFrame().setVisible(true);
+															
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		label_1.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new EtchedBorder(EtchedBorder.RAISED, null, null)));
@@ -157,7 +162,6 @@ public class Home {
 		Dimension dim = toolkit.getScreenSize();
 		int width = (int) dim.getWidth();
 		int height = (int) dim.getHeight();
-		System.out.println(width);
 		final JLabel lblNewLabel_2 = new JLabel("");
 		
 		panel.add(lblNewLabel_2);
@@ -189,6 +193,8 @@ public class Home {
 		label_5.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
 		label_5.setBounds(1071, 149, 120, 23);
 		panel.add(label_5);
+	
+
 
 	}
 }

@@ -1,31 +1,22 @@
 package edu.gui;
 
-import java.applet.Applet;
 import java.awt.EventQueue;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import java.awt.BorderLayout;
 
 import javax.swing.JTextField;
-import javax.swing.border.MatteBorder;
-import javax.swing.plaf.OptionPaneUI;
 
-import java.awt.Button;
+
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
 
 import javax.swing.JLabel;
@@ -36,15 +27,11 @@ import javax.swing.border.BevelBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
-import com.sun.tools.internal.ws.processor.model.Message;
-import com.sun.tools.javac.util.Warner;
 
 import edu.dao.classes.UserDao;
 
