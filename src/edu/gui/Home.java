@@ -1,4 +1,6 @@
 package edu.gui;
+import edu.dao.classes.*;
+import edu.entities.User;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +22,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.CardLayout;
 import javax.swing.border.EtchedBorder;
+
 import javax.swing.border.CompoundBorder;
 
 import java.awt.event.MouseAdapter;
@@ -28,7 +31,16 @@ import java.awt.event.MouseEvent;
 public class Home {
 
 	private static JFrame frame1;
+	private String username;
 	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	/**
 	 * Launch the application.
@@ -52,14 +64,26 @@ public class Home {
 	public Home() {
 		initialize();
 	}
+	public Home(String username){
+		this.username = username;
+		initialize();
+	}
 	public JFrame getFrame1() {
 		return frame1;
 	}
 
 	public void setFrame1(JFrame frame1) {
-		this.frame1 = frame1;
+		Home.frame1 = frame1;
 	}
-
+	
+	public void newPanel (JFrame frame1,JPanel NPanel){
+		frame1.removeAll();
+		//frame1.add(NPanel);
+		frame1.validate();
+		frame1.repaint();
+        //System.out.println("in4");
+		//frame1.setVisible(false);
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -76,6 +100,12 @@ public class Home {
 		UI.put("OptionPane.background",borderc);
 		UI.put("Panel.background", borderc);
 
+		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+		Dimension dim = toolkit.getScreenSize();
+		int width = (int) dim.getWidth();
+		int height = (int) dim.getHeight();
+		
+		
 		final JPanel panel = new JPanel( );
 		//panel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 0, 128), new Color(255, 0, 255), new Color(0, 255, 255), new Color(0, 191, 255)));
 		panel.setBackground(Color.WHITE);
@@ -108,7 +138,7 @@ public class Home {
 				label.setSize(120, 120);
 			}
 		});
-		
+
 		label.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new EtchedBorder(EtchedBorder.RAISED, null, null)));
 		label.setIcon(new ImageIcon("./src/edu/utils/tests1.png"));
 		label.setHorizontalTextPosition(JLabel.CENTER);
@@ -116,6 +146,16 @@ public class Home {
 		label.setBounds(732 , 26, 120, 120);
 		panel.add(label);
 
+		UserDao userDao = new UserDao();
+		final User user = userDao.findUserByLogin(username);
+		JLabel label_6 = new JLabel("");
+		label_6.setBounds(round(dim.width*0.88), 0, 134, 88);
+		label_6.setHorizontalTextPosition(JLabel.CENTER);
+		label_6.setVerticalTextPosition(JLabel.CENTER);
+		label_6.setText(user.getPrenom()+" "+user.getNom());
+		label_6.setFont(new Font("Simplified Arabic", Font.PLAIN, 30));
+		panel.add(label_6);
+	
 		final JButton label_1 = new JButton("");
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -127,8 +167,8 @@ public class Home {
 			}
 			public void mouseClicked(MouseEvent e) {
 				try {
-					frame1.getContentPane().setVisible(false);
-					new Informationpanel().getFrame().setVisible(true);
+					//frame1.getContentPane().setVisible(false);
+					newPanel(frame1,new Informationpanel(user).getInfoP());
 															
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -158,10 +198,7 @@ public class Home {
 		label_2.setBounds(905 , 26, 120, 120);
 		panel.add(label_2);
 		
-		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
-		Dimension dim = toolkit.getScreenSize();
-		int width = (int) dim.getWidth();
-		int height = (int) dim.getHeight();
+
 		final JLabel lblNewLabel_2 = new JLabel("");
 		
 		panel.add(lblNewLabel_2);
@@ -193,8 +230,14 @@ public class Home {
 		label_5.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
 		label_5.setBounds(1071, 149, 120, 23);
 		panel.add(label_5);
-	
+		
 
 
+
+	}
+
+	private int round(double d) {
+		// TODO Auto-generated method stub
+		return (int) Math.round(d);
 	}
 }

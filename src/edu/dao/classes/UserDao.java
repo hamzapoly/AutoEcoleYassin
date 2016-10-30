@@ -1,17 +1,17 @@
 package edu.dao.classes;
 
-import java.awt.Window;
+import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.dao.interfaces.IUserDao;
 import edu.entities.User;
+import edu.gui.Home;
 import edu.technique.DataSource;
 
 public class UserDao implements IUserDao {
@@ -85,7 +85,36 @@ public class UserDao implements IUserDao {
 	@Override
 	public User findUserByLogin(String login) {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			String req = "SELECT * FROM `user` WHERE login =? ";
+			PreparedStatement ps;			
+			ps = connection.prepareStatement(req);
+	        ps.setString(1, login);
+	        ResultSet res = ps.executeQuery();
+	        if (res.next()) {
+		       User user = new User(res.getInt("id"),res.getString("nom"),res.getString("prenom"),res.getString("email"),res.getString("login"),res.getString("profilepic"));
+		       return user;
+	        }
+	        else {
+	        	return null;
+	        }
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
+
+/*public static void main(String[] args) {
+			try {
+				UserDao userDao = new UserDao();
+				userDao.findUserByLogin("BYassin");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+}*/
 }
+

@@ -10,6 +10,19 @@ public class User {
 	private String email;
 	private String login;
 	private char[] password;
+	private String profilepic;
+	public String getProfilepic() {
+		return profilepic;
+	}
+
+
+
+	public void setProfilepic(String profilepic) {
+		this.profilepic = profilepic;
+	}
+
+
+
 	private PasswordAuthentication userinfo ;
 		
 	public User() {
@@ -28,6 +41,15 @@ public class User {
 		this.login = login;
 		this.password = password;
 		this.userinfo = userinfo;
+	}
+	public User(int id, String nom, String prenom, String email, String login,String profilepic) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.login = login;
+		this.profilepic=profilepic;
 	}
 
 

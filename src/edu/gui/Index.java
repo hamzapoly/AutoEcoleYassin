@@ -197,12 +197,12 @@ public class Index {
 				 
 				 if (userdao.authentification(username.getText(), password.getText())) {
 				frame.dispose();
-				Home window = new Home();
+				Home window = new Home(username.getText());
 				window.getFrame1().setVisible(true);
 				} 
 				else {
 					//lblNewLabel_3.setEnabled(true);
-					//optionPane.showMessageDialog(null,lblNewLabel_msg,"Ouuups",optionPane.WARNING_MESSAGE);
+					//optionPane.showMessaْgeDialog(null,lblNewLabel_msg,"Ouuups",optionPane.WARNING_MESSAGE);
  					 JOptionPane.showMessageDialog(null,lblNewLabel_msg,"",JOptionPane.INFORMATION_MESSAGE,stopicon);
 
 			 	}
