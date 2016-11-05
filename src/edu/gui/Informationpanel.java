@@ -22,6 +22,8 @@ import java.awt.Font;
 
 import javax.swing.border.MatteBorder;
 
+import com.sun.tools.internal.ws.processor.generator.GeneratorConstants;
+
 import edu.entities.User;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
@@ -42,7 +44,6 @@ public class Informationpanel {
 	
 	public Informationpanel(User user) {
 		this.user = user;
-		System.out.println(user.getProfilepic());
 		initialize();
 	}
 	public JFrame getFrame() {
@@ -88,11 +89,11 @@ public class Informationpanel {
 		frame.getContentPane().setBackground(Color.LIGHT_GRAY);*/
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ;
 
-		JPanel InfoP = new JPanel();
+		final JPanel InfoP = new JPanel();
 		InfoP.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		
 		JLabel lblNewLabel_1 = new JLabel("الإحصائيات");
-		lblNewLabel_1.setBorder(new MatteBorder(0, 2, 0, 0, Color.BLACK));
+		lblNewLabel_1.setBorder(new MatteBorder(0, 2, 0, 0, Color.white));
 		//lblNewLabel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY));
 		lblNewLabel_1.setFont(new Font("Aldhabi", Font.PLAIN, 36));
 		lblNewLabel_1.setForeground(Color.white);
@@ -145,24 +146,21 @@ public class Informationpanel {
 		labelpic.setForeground(Color.white);
 		labelpic.setHorizontalAlignment(SwingConstants.CENTER);
 		InfoP.add(labelpic);
-		
+		final Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
 		//HomeICon action
 		label_3.addMouseListener(new MouseAdapter() {
 		public void mouseClicked (MouseEvent e) {
-			frame.getContentPane().setVisible(false);
-			new Home(user.getLogin()).getFrame1().setVisible(true);
+				getFrame().getContentPane().removeAll();					
+				getFrame().getContentPane().add(new Home(user.getLogin()).getmainP());
+				getFrame().getContentPane().validate();
 		}
-		public void mouseEntered(MouseEvent e) {
-			//label_3.setSize(label_3.getSize().width+5,label_3.getSize().height+5);
-			Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
-		    frame.setCursor(cursor);
+				public void mouseEntered(MouseEvent e) {
+					InfoP.setCursor(cursor);
 		     		}
-		
-		public void mouseExited(MouseEvent e) {
-			//label_3.setSize(label_3.getSize().width-5,label_3.getSize().height-5);
-			frame.setCursor(Cursor.getDefaultCursor());
-		}
-
+				public void mouseExited(MouseEvent e) {
+					InfoP.setCursor(Cursor.getDefaultCursor());
+				}
+			
 		});
 		
 		try {
@@ -201,16 +199,13 @@ public class Informationpanel {
 					JFrame frame = new JFrame();
 					frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 14));
 					frame.getContentPane().setForeground(new Color(230, 230, 250));
-					frame.setBackground(Color.WHITE);
+					frame.setBackground(Color.red);
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.getContentPane().setLayout(null);
 					frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-					frame.getContentPane().setBackground(Color.LIGHT_GRAY);
+					frame.getContentPane().setBackground(Color.red);
 					User user = new User();
-					user.setLogin("BHamza");
-					Informationpanel window = new Informationpanel(user);
-					System.out.println(window.getInfoP());
-					//frame.add(window.getInfoP());
+					user.setLogin("BYassin");
+					frame.getContentPane().add(new Informationpanel(user,frame).getInfoP());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -32,7 +32,8 @@ public class Home {
 
 	private static JFrame frame1;
 	private String username;
-	
+	private JPanel mainP;
+
 
 	public String getUsername() {
 		return username;
@@ -76,12 +77,17 @@ public class Home {
 		Home.frame1 = frame1;
 	}
 	
+	public JPanel getmainP() {
+		return mainP;
+	}
+
+	public void setInfoP(JPanel mainP) {
+		this.mainP = mainP;
+	}
+	
 	public void newPanel (JFrame frame1,JPanel NPanel){
-		frame1.removeAll();
-		//frame1.add(NPanel);
-		frame1.validate();
-		frame1.repaint();
-        //System.out.println("in4");
+		frame1.getContentPane().add(NPanel);
+      //  System.out.println("in4");
 		//frame1.setVisible(false);
 	}
 	/**
@@ -167,9 +173,10 @@ public class Home {
 			}
 			public void mouseClicked(MouseEvent e) {
 				try {
-					//frame1.getContentPane().setVisible(false);
-					newPanel(frame1,new Informationpanel(user).getInfoP());
-															
+					frame1.getContentPane().removeAll();							
+					frame1.getContentPane().add(new Informationpanel(user).getInfoP());
+					frame1.getContentPane().validate();
+					//frame1.getContentPane().repaint();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -230,7 +237,8 @@ public class Home {
 		label_5.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
 		label_5.setBounds(1071, 149, 120, 23);
 		panel.add(label_5);
-		
+		this.mainP = panel;
+		System.out.println( mainP);
 
 
 

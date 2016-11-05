@@ -158,7 +158,6 @@ public class Index {
 		frame.getContentPane().add(btnNewButton);
 		JLabel label = new JLabel("");
 		label.setBorder(BorderFactory.createRaisedBevelBorder());
-		Dimension size = label.getPreferredSize();
 		label.setBounds(852, 322,
 	             318, 168);
 		frame.getContentPane().add(label);
@@ -167,7 +166,6 @@ public class Index {
 		//label.setBorder(BorderFactory.createRaisedBevelBorder());
 		//label.setBounds(1188, 280, 361, 174);
 		//frame.getContentPane().add(label);
-		final JOptionPane optionPane = new JOptionPane();
 		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
 		Dimension dim = toolkit.getScreenSize();
 		int width = (int) dim.getWidth();
@@ -197,8 +195,11 @@ public class Index {
 				 
 				 if (userdao.authentification(username.getText(), password.getText())) {
 				frame.dispose();
-				Home window = new Home(username.getText());
-				window.getFrame1().setVisible(true);
+				//Home window = new Home(username.getText());
+				//MainFrame window = 
+				new MainFrame(new Home(username.getText()).getmainP());
+	
+				//window.getFrame().setVisible(true);
 				} 
 				else {
 					//lblNewLabel_3.setEnabled(true);
