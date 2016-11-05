@@ -22,10 +22,10 @@ package edu.gui;
 		public MainFrame() {
 			initialize();
 		}
-		public MainFrame(JPanel panel) {
+		/*public MainFrame(JPanel panel) {
 			this.panel = panel;
 			initialize();
-		}
+		}*/
 
 		public JFrame getFrame() {
 			return frame;
@@ -44,28 +44,26 @@ package edu.gui;
 			this.panel = panel;
 		}
 
-		public void newPanel (JFrame frame1,JPanel NPanel){
-			frame1.getContentPane().add(NPanel);
-	      //  System.out.println("in4");
-		  //frame1.setVisible(false);
+		public void newPanel (JPanel NPanel){
+			frame.getContentPane().removeAll();
+			frame.getContentPane().add(NPanel);
+			frame.getContentPane().repaint();
 		}
 		/**
 		 * Initialize the contents of the frame.
 		 */
 		private void initialize() {
-			frame = new JFrame();
+			frame = new JFrame("Bonsoir");
 			Toolkit toolkit =  Toolkit.getDefaultToolkit ();
 			Dimension dim = toolkit.getScreenSize();
-			frame.getContentPane().setForeground(Color.WHITE);
+			//frame.getContentPane().setForeground(Color.WHITE);
 			frame.getContentPane().setFont(new Font("Andalus", frame.getContentPane().getFont().getStyle(), frame.getContentPane().getFont().getSize()));
 			frame.setSize(dim);
 			frame.setResizable(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.getContentPane().add(panel);
-			frame.setVisible(true);
 		}
 
-		public static void main(String[] args) {
+		/*public static void main(String[] args) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -76,7 +74,7 @@ package edu.gui;
 					}
 				}
 			});
-		}
+		}*/
 	}
 
 

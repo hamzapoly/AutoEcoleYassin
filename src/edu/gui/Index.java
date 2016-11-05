@@ -195,9 +195,8 @@ public class Index {
 				 
 				 if (userdao.authentification(username.getText(), password.getText())) {
 				frame.dispose();
-				//Home window = new Home(username.getText());
-				//MainFrame window = 
-				new MainFrame(new Home(username.getText()).getmainP());
+				//MainFrame window = new MainFrame();
+				new Home(username.getText(), new MainFrame());
 	
 				//window.getFrame().setVisible(true);
 				} 

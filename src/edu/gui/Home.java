@@ -30,7 +30,7 @@ import java.awt.event.MouseEvent;
 
 public class Home {
 
-	private static JFrame frame1;
+	private MainFrame frame1;
 	private String username;
 	private JPanel mainP;
 
@@ -51,7 +51,7 @@ public class Home {
 			public void run() {
 				try {
 					Home window = new Home();
-					window.frame1.setVisible(true);
+					//window.frame1.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,23 +65,24 @@ public class Home {
 	public Home() {
 		initialize();
 	}
-	public Home(String username){
+	public Home(String username,MainFrame HFrame){
 		this.username = username;
+		this.frame1=HFrame;
 		initialize();
 	}
-	public JFrame getFrame1() {
+	public MainFrame getFrame1() {
 		return frame1;
 	}
 
-	public void setFrame1(JFrame frame1) {
-		Home.frame1 = frame1;
+	public void setFrame1(MainFrame frame1) {
+		this.frame1 = frame1;
 	}
 	
 	public JPanel getmainP() {
 		return mainP;
 	}
 
-	public void setInfoP(JPanel mainP) {
+	public void setmainP(JPanel mainP) {
 		this.mainP = mainP;
 	}
 	
@@ -94,17 +95,17 @@ public class Home {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame1 = new JFrame();
-		frame1.getContentPane().setForeground(Color.WHITE);
-		frame1.getContentPane().setFont(new Font("Andalus", frame1.getContentPane().getFont().getStyle(), frame1.getContentPane().getFont().getSize()));
-		frame1.setSize(1600, 900);
-		frame1.setResizable(true);
-		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame1.getContentPane().setLayout(new CardLayout(0, 0));
+		//frame1 = new JFrame("Bonjour");
+		//frame1.getContentPane().setForeground(Color.WHITE);
+		//frame1.getContentPane().setFont(new Font("Andalus", frame1.getContentPane().getFont().getStyle(), frame1.getContentPane().getFont().getSize()));
+		//frame1.setSize(1600, 900);
+		//frame1.setResizable(true);
+		//frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame1.getContentPane().setLayout(new CardLayout(0, 0));
 		Color borderc = new Color(79, 139, 156);
 		UIManager UI = new UIManager();
-		UI.put("OptionPane.background",borderc);
-		UI.put("Panel.background", borderc);
+		UIManager.put("OptionPane.background",borderc);
+		UIManager.put("Panel.background", borderc);
 
 		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
 		Dimension dim = toolkit.getScreenSize();
@@ -112,11 +113,11 @@ public class Home {
 		int height = (int) dim.getHeight();
 		
 		
-		final JPanel panel = new JPanel( );
+		final JPanel panel = new JPanel();
 		//panel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 0, 128), new Color(255, 0, 255), new Color(0, 255, 255), new Color(0, 191, 255)));
 		panel.setBackground(Color.WHITE);
 		panel.setForeground(new Color(230, 230, 250));
-		frame1.getContentPane().add(panel, "name_1483415348374009");
+		//frame1.getContentPane().add(panel, "name_1483415348374009");
 		panel.setLayout(null);
 		Insets insets = panel.getInsets();
 		
@@ -154,13 +155,13 @@ public class Home {
 
 		UserDao userDao = new UserDao();
 		final User user = userDao.findUserByLogin(username);
-		JLabel label_6 = new JLabel("");
+		final JLabel label_6 = new JLabel("");
 		label_6.setBounds(round(dim.width*0.88), 0, 134, 88);
 		label_6.setHorizontalTextPosition(JLabel.CENTER);
 		label_6.setVerticalTextPosition(JLabel.CENTER);
 		label_6.setText(user.getPrenom()+" "+user.getNom());
 		label_6.setFont(new Font("Simplified Arabic", Font.PLAIN, 30));
-		panel.add(label_6);
+		//panel.add(label_6);
 	
 		final JButton label_1 = new JButton("");
 		label_1.addMouseListener(new MouseAdapter() {
@@ -173,10 +174,8 @@ public class Home {
 			}
 			public void mouseClicked(MouseEvent e) {
 				try {
-					frame1.getContentPane().removeAll();							
-					frame1.getContentPane().add(new Informationpanel(user).getInfoP());
-					frame1.getContentPane().validate();
-					//frame1.getContentPane().repaint();
+					panel.removeAll();
+					new Informationpanel(user, frame1);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -238,10 +237,9 @@ public class Home {
 		label_5.setBounds(1071, 149, 120, 23);
 		panel.add(label_5);
 		this.mainP = panel;
-		System.out.println( mainP);
-
-
-
+		this.frame1.newPanel(panel);
+		//this.frame1.getFrame().getContentPane().add(panel);
+		frame1.getFrame().setVisible(true);
 	}
 
 	private int round(double d) {

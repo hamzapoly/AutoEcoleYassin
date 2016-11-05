@@ -30,7 +30,7 @@ import javax.swing.border.LineBorder;
 
 public class Informationpanel {
 
-	private JFrame frame;
+	private MainFrame frame1;
 	private User user;
 	private JPanel InfoP;
 
@@ -42,16 +42,18 @@ public class Informationpanel {
 		initialize();
 	}
 	
-	public Informationpanel(User user) {
+	public Informationpanel(User user,MainFrame frame) {
+		this.frame1 = frame;
 		this.user = user;
 		initialize();
 	}
-	public JFrame getFrame() {
-		return frame;
+	public MainFrame getFrame() {
+		System.out.println("Je t'aimes");
+		return frame1;
 	}
 
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
+	public void setFrame(MainFrame frame) {
+		this.frame1 = frame;
 	}
 	public JPanel getInfoP() {
 		return InfoP;
@@ -78,20 +80,20 @@ public class Informationpanel {
 	 * 
 	 */
 	private void initialize() {
-		/*frame = new JFrame();
+		/*JFrame frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 14));
 		frame.getContentPane().setForeground(new Color(230, 230, 250));
 		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ;
 		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		frame.getContentPane().setBackground(Color.LIGHT_GRAY);*/
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ;
 
 		final JPanel InfoP = new JPanel();
-		InfoP.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		
+		InfoP.setSize(screenSize);
+		InfoP.setLayout(null);
+
 		JLabel lblNewLabel_1 = new JLabel("الإحصائيات");
 		lblNewLabel_1.setBorder(new MatteBorder(0, 2, 0, 0, Color.white));
 		//lblNewLabel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY));
@@ -150,9 +152,9 @@ public class Informationpanel {
 		//HomeICon action
 		label_3.addMouseListener(new MouseAdapter() {
 		public void mouseClicked (MouseEvent e) {
-				getFrame().getContentPane().removeAll();					
-				getFrame().getContentPane().add(new Home(user.getLogin()).getmainP());
-				getFrame().getContentPane().validate();
+				InfoP.removeAll();					
+				new Home(user.getLogin(),frame1);
+				
 		}
 				public void mouseEntered(MouseEvent e) {
 					InfoP.setCursor(cursor);
@@ -181,7 +183,9 @@ public class Informationpanel {
 			Color newpink = new Color(227,17, 18);
 			label_4.setBackground(Color.DARK_GRAY);
 			InfoP.add(label_4);
-			this.setInfoP(InfoP);
+			//this.setInfoP(InfoP);
+			frame1.newPanel(InfoP);
+			frame1.getFrame().setVisible(true);
 			//frame.getContentPane().add(InfoP);
 			//frame.getContentPane().add(canvas);
 			/*MyPannel Pannel = new MyPannel();
@@ -205,7 +209,7 @@ public class Informationpanel {
 					frame.getContentPane().setBackground(Color.red);
 					User user = new User();
 					user.setLogin("BYassin");
-					frame.getContentPane().add(new Informationpanel(user,frame).getInfoP());
+					//frame.getContentPane().add(new Informationpanel(user));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
