@@ -69,7 +69,22 @@ public class UserDao implements IUserDao {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void updateProfilePic(User user,String path) {
+		try {
+			String req = "update user set profilepic =? where login=?";
+			PreparedStatement ps;			
+			ps = connection.prepareStatement(req);
+	        ps.setString(1, path);
+	        ps.setString(2, user.getLogin());
+	        ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+
+	}
 	@Override
 	public void removeUserByLogin(String login) {
 		// TODO Auto-generated method stub

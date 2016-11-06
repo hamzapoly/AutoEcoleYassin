@@ -3,6 +3,7 @@ import edu.dao.classes.*;
 import edu.entities.User;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -117,6 +118,8 @@ public class Home {
 		//panel.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(128, 0, 128), new Color(255, 0, 255), new Color(0, 255, 255), new Color(0, 191, 255)));
 		panel.setBackground(Color.WHITE);
 		panel.setForeground(new Color(230, 230, 250));
+		final Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
+
 		//frame1.getContentPane().add(panel, "name_1483415348374009");
 		panel.setLayout(null);
 		Insets insets = panel.getInsets();
@@ -139,10 +142,12 @@ public class Home {
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				label.setCursor(cursor);
 				label.setSize(125, 125);
 			}
 			public void mouseExited(MouseEvent e) {
 				label.setSize(120, 120);
+				label.setCursor(Cursor.getDefaultCursor());
 			}
 		});
 
@@ -161,16 +166,19 @@ public class Home {
 		label_6.setVerticalTextPosition(JLabel.CENTER);
 		label_6.setText(user.getPrenom()+" "+user.getNom());
 		label_6.setFont(new Font("Simplified Arabic", Font.PLAIN, 30));
-		//panel.add(label_6);
+		panel.add(label_6);
 	
 		final JButton label_1 = new JButton("");
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				label_1.setCursor(cursor);
 				label_1.setSize(125, 125);
 			}
 			public void mouseExited(MouseEvent e) {
 				label_1.setSize(120, 120);
+				label_1.setCursor(Cursor.getDefaultCursor());
+
 			}
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -193,9 +201,13 @@ public class Home {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				label_2.setSize(125, 125);
+				label_2.setCursor(cursor);
+
 			}
 			public void mouseExited(MouseEvent e) {
 				label_2.setSize(120, 120);
+				label_2.setCursor(Cursor.getDefaultCursor());
+
 			}
 		});
 		label_2.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null), new EtchedBorder(EtchedBorder.RAISED, null, null)));
@@ -209,8 +221,11 @@ public class Home {
 		
 		panel.add(lblNewLabel_2);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-		lblNewLabel_2.setIcon(new ImageIcon("./src/edu/utils/homebackground2.jpg"));
+		lblNewLabel_2.setIcon(new ImageIcon("./src/edu/utils/homebackground3.jpg"));
 		lblNewLabel_2.setHorizontalTextPosition(JLabel.CENTER);
+		lblNewLabel_2.setVerticalAlignment(JLabel.CENTER);
+		lblNewLabel_2.setHorizontalAlignment(JLabel.CENTER);
+		
 		lblNewLabel_2.setBounds(0, 0, width, height);
 		
 		JLabel lblNewLabel_1 = new JLabel("الدروس");
