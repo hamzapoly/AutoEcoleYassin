@@ -8,7 +8,7 @@ public interface IUserDao {
 
 	void addUser(User user);
 
-    void updateUser(User user);
+    void updateUserInfo(User user);
  
     void updateProfilePic(User user,String path);
 

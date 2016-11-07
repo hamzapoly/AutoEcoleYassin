@@ -202,17 +202,17 @@ public class Informationpanel {
 		//Information Action
 		label_2.addMouseListener(new MouseAdapter() {
 		public void mouseClicked (MouseEvent e) {
-				try {
+					try {
 					InfoP.add(new InfoEdit(user).getinternalFrame());
-				} catch (IOException e1) {
+					} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}			
+					}			
 				InfoP.repaint();
-		}
+				}
 				public void mouseEntered(MouseEvent e) {
-					InfoP.setCursor(cursor);
-		     		}
+				InfoP.setCursor(cursor);
+				}
 				public void mouseExited(MouseEvent e) {
 					InfoP.setCursor(Cursor.getDefaultCursor());
 				}

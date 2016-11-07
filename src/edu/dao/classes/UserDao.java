@@ -1,6 +1,5 @@
 package edu.dao.classes;
 
-import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.mysql.jdbc.Statement;
 
 import edu.dao.interfaces.IUserDao;
 import edu.entities.User;
@@ -20,7 +21,6 @@ public class UserDao implements IUserDao {
 
     public UserDao() {
     	 connection = DataSource.getInstance().getConnection();
-    	 System.out.println("Connextion établie");
     	 }
     
 	@Override
@@ -65,9 +65,29 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public void updateUserInfo(User user) {
 		// TODO Auto-generated method stub
-		
+		PreparedStatement ps = null; 
+		try {
+			
+			String req = "updated user set Nom=? , Prenom=? ,email=? ,login =? ";
+			ps = InitialisePreparedStatement(connection, req, true, user.getNom(),user.getPrenom(),user.getEmail(),user.getLogin());
+			int res  = ps.executeUpdate();
+			if (res==0) {
+				throw new RuntimeException("La mise à jours n'a pas été effectué");
+			}
+			} catch (SQLException e) {
+					// TODO: handle exception
+				throw new RuntimeException(e);
+				}
+	}
+	
+	public static PreparedStatement InitialisePreparedStatement(Connection cnx,String req,boolean returnGeneratedKeys, Object...objects) throws SQLException{
+		PreparedStatement ps = cnx.prepareStatement(req, returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
+		for (int i=0;i<objects.length;i++){
+			ps.setObject(i+1, objects[i]);
+				}
+		return ps;
 	}
 	
 	public void updateProfilePic(User user,String path) {
