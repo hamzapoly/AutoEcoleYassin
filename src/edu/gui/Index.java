@@ -34,6 +34,7 @@ import javax.swing.JButton;
 
 
 import edu.dao.classes.UserDao;
+import edu.technique.DataSource;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -43,14 +44,18 @@ public class Index {
 	private JFrame frame;
 	private JTextField username;
 	private JPasswordField password;
+	private UserDao userdao; 
+	private	DataSource datasource ;
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		final DataSource datasource = DataSource.getInstance();;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Index window = new Index();
+					Index window = new Index(datasource);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,7 +67,8 @@ public class Index {
 	/**
 	 * Create the application.
 	 */
-	public Index() {
+	public Index(DataSource datasource) {
+		this.datasource = datasource;
 		initialize();
 	}
 
@@ -70,6 +76,7 @@ public class Index {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		final UserDao userdao = new UserDao(datasource);
 		frame = new JFrame("Yassin");
 		frame.getContentPane().setForeground(new Color(139, 0, 139));
 		frame.getContentPane().setFont(new Font("Andalus", frame.getContentPane().getFont().getStyle(), frame.getContentPane().getFont().getSize()));
@@ -188,15 +195,10 @@ public class Index {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserDao userdao = new UserDao();
-				 UIManager UI=new UIManager();
-				 UI.put("OptionPane.background", Color.white);
-				 UI.put("Panel.background", Color.white);
-				 
 				 if (userdao.authentification(username.getText(), password.getText())) {
 				frame.dispose();
 				//MainFrame window = new MainFrame();
-				new Home(username.getText(), new MainFrame());
+				new Home(userdao,username.getText(), new MainFrame(userdao,username.getText()));
 	
 				//window.getFrame().setVisible(true);
 				} 

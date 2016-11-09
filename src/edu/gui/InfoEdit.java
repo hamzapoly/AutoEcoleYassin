@@ -29,6 +29,7 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+import edu.dao.classes.UserDao;
 import edu.entities.User;
 
 public class InfoEdit {
@@ -40,6 +41,7 @@ public class InfoEdit {
 	private JTextField textField_3;
 	private JLabel internalFrame;
 	private User user;
+	private UserDao userdao;
 	public JLabel getinternalFrame(){
 		return this.internalFrame;
 	}
@@ -168,14 +170,30 @@ public class InfoEdit {
 		JButton btnNewButton = new JButton("تأكيد");
 		btnNewButton.setFont(new Font("Aldhabi", Font.BOLD, 27));
 		btnNewButton.setBounds(textField_3.getLocation().x-100, textField_3.getLocation().y+30, 99, 34);
-		btnNewButton.addActionListener(new ActionListener() {
+		/*btnNewButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				if verif(textField.getText()) {
+					if verif(textField_1.getText()) {
+						if verif(textField_2.getText()) {
+							if verif(textField_3.getText()) {
+								user.setNom(textField.getText());
+								user.setPrenom(textField_1.getText());
+								user.setEmail(textField_2.getText());
+								user.setLogin(textField_3.getText());
+								userdao.updateUserInfo(user);
+							} else throw  ("")
+						}
+					}
+				}
+				user.setNom(textField.getText());
+				user.setPrenom(textField_1.getText());
+				user.setEmail(textField_2.getText());
+				user.setLogin(textField_3.getText());
 			}
-		});
+		});*/
 		internalFrame.add(btnNewButton);
 	}
 }

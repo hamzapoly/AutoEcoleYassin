@@ -34,6 +34,7 @@ public class Home {
 	private MainFrame frame1;
 	private String username;
 	private JPanel mainP;
+	private UserDao userdao;
 
 
 	public String getUsername() {
@@ -66,7 +67,8 @@ public class Home {
 	public Home() {
 		initialize();
 	}
-	public Home(String username,MainFrame HFrame){
+	public Home(UserDao userdao,String username,MainFrame HFrame){
+		this.userdao=userdao;
 		this.username = username;
 		this.frame1=HFrame;
 		initialize();
@@ -158,8 +160,7 @@ public class Home {
 		label.setBounds(732 , 26, 120, 120);
 		panel.add(label);
 
-		UserDao userDao = new UserDao();
-		final User user = userDao.findUserByLogin(username);
+		final User user = userdao.findUserByLogin(username);
 		final JLabel label_6 = new JLabel("");
 		label_6.setBounds(round(dim.width*0.88), 0, 134, 88);
 		label_6.setHorizontalTextPosition(JLabel.CENTER);
@@ -183,7 +184,7 @@ public class Home {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					panel.removeAll();
-					new Informationpanel(user, frame1);
+					new Informationpanel(userdao,user, frame1);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

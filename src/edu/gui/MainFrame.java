@@ -1,14 +1,14 @@
 package edu.gui;
 
 
-	import java.awt.Color;
 	import java.awt.Dimension;
-	import java.awt.EventQueue;
 
 	import javax.swing.JFrame;
 	import javax.swing.JPanel;
 
-	import java.awt.Font;
+import edu.dao.classes.UserDao;
+
+import java.awt.Font;
 
 	import java.awt.Toolkit;
 
@@ -16,10 +16,14 @@ package edu.gui;
 
 		private JFrame frame;
 		private JPanel panel;
+		private UserDao userdao;
+		private String login;
 		/**
 		 * Create the application.
 		 */
-		public MainFrame() {
+		public MainFrame(UserDao userdao,String login) {
+			this.login = login;
+			this.userdao = userdao;
 			initialize();
 		}
 		/*public MainFrame(JPanel panel) {
@@ -53,7 +57,8 @@ package edu.gui;
 		 * Initialize the contents of the frame.
 		 */
 		private void initialize() {
-			frame = new JFrame("Bonsoir");
+			
+			frame = new JFrame(userdao.findUserByLogin(login).getNom()+" "+userdao.findUserByLogin(login).getPrenom());
 			Toolkit toolkit =  Toolkit.getDefaultToolkit ();
 			Dimension dim = toolkit.getScreenSize();
 			//frame.getContentPane().setForeground(Color.WHITE);

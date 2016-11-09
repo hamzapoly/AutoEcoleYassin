@@ -1,7 +1,6 @@
 package edu.gui;
 
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,15 +17,12 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.imageio.ImageIO;
-import javax.script.ScriptException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -35,17 +31,16 @@ import javax.swing.border.MatteBorder;
 
 import org.apache.commons.io.FileUtils;
 
-import com.sun.tools.internal.ws.processor.generator.GeneratorConstants;
 
 import edu.dao.classes.UserDao;
 import edu.entities.User;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 
 public class Informationpanel {
 
 	private MainFrame frame1;
 	private User user;
+	private UserDao userdao;
 	private JPanel InfoP;
 
 	/**
@@ -56,7 +51,8 @@ public class Informationpanel {
 		initialize();
 	}
 	
-	public Informationpanel(User user,MainFrame frame) {
+	public Informationpanel(UserDao userdao,User user,MainFrame frame) {
+		this.userdao = userdao;
 		this.frame1 = frame;
 		this.user = user;
 		initialize();
@@ -250,7 +246,7 @@ public class Informationpanel {
 		changepic.setIcon(new ImageIcon("./src/edu/utils/editpic.png"));
 		changepic.setToolTipText("إضغط هنا لتغيير الصورة");
 		InfoP.add(changepic);
-		InfoP.setComponentZOrder(changepic, 4);
+		InfoP.setComponentZOrder(label_3, 1);
 		changepic.addMouseListener(new MouseAdapter() {
 			public void mouseClicked (MouseEvent e) {
 					JFileChooser fileChooser = new JFileChooser();	
@@ -268,14 +264,14 @@ public class Informationpanel {
 						}
 						try {
 							File newI = new File(user.getProfilepic());
-						//	BufferedImage newIBuff = ImageIO.read(newI);
-							labelpic.setIcon(new ImageIcon(ImageIO.read(newI)));
-							File NewIm = imageresize(newI, newI, labelpic.getWidth(), labelpic.getHeight());
-							labelpic.setIcon(new ImageIcon(ImageIO.read(NewIm)));
-						//	BufferedImage NewIm = resizeImage(newIBuff, labelpic.getWidth(), labelpic.getHeight());
-						//	ImageIcon eNewImIcon = new ImageIcon(NewIm);
-						//	labelpic.setIcon(eNewImIcon);
-							
+							BufferedImage newIBuff = ImageIO.read(newI);
+						//	labelpic.setIcon(new ImageIcon(ImageIO.read(newI)));
+						//	File NewIm = imageresize(newI, newI, labelpic.getWidth(), labelpic.getHeight());
+						//	labelpic.setIcon(new ImageIcon(ImageIO.read(NewIm)));
+							BufferedImage NewIm = resizeImage(newIBuff, labelpic.getWidth(), labelpic.getHeight());
+							ImageIcon eNewImIcon = new ImageIcon(NewIm);
+							labelpic.setIcon(eNewImIcon);
+										
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -294,7 +290,7 @@ public class Informationpanel {
 		label_3.addMouseListener(new MouseAdapter() {
 		public void mouseClicked (MouseEvent e) {
 				InfoP.removeAll();					
-				new Home(user.getLogin(),frame1);
+				new Home(userdao,user.getLogin(),frame1);
 				
 		}
 				public void mouseEntered(MouseEvent e) {
@@ -312,7 +308,7 @@ public class Informationpanel {
 			label_1.setBounds(lblNewLabel_1.getLocation().x+10+round(menuWidth)+90, 5,round(menuWidth),round(menuHeight));
 			label_2.setBounds(label_1.getLocation().x+10+round(menuWidth)+90,5,round(menuWidth),round(menuHeight));
 			label_3.setBounds(label_2.getLocation().x+10+round(menuWidth),5,round(menuWidth),round(menuHeight)*2);
-			
+
 			Canvas canvas = new Canvas();
 			canvas.setBackground(new Color(220, 20, 60));
 			canvas.setBounds(0, 0, 264, screenSize.height);
@@ -321,7 +317,7 @@ public class Informationpanel {
 			label_4.setOpaque(true);
 			label_4.setBounds(0, 0, screenSize.width,round(screenSize.height*0.1));
 			//label_4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY));
-			Color newpink = new Color(227,17, 18);
+			//Color newpink = new Color(227,17, 18);
 			label_4.setBackground(Color.DARK_GRAY);
 			InfoP.add(label_4);
 			//this.setInfoP(InfoP);
@@ -337,7 +333,7 @@ public class Informationpanel {
 			System.out.println(e.getMessage());
 		}
 	}
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -350,12 +346,12 @@ public class Informationpanel {
 					frame.getContentPane().setBackground(Color.red);
 					User user = new User();
 					user.setLogin("BYassin");
-					frame.getContentPane().add(new Informationpanel(user,new MainFrame()).getInfoP());
+					frame.getContentPane().add(new Informationpanel(userdao,user,new MainFrame(userdao)).getInfoP());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
 }

@@ -14,42 +14,52 @@ import edu.dao.interfaces.IUserDao;
 import edu.entities.User;
 import edu.gui.Home;
 import edu.technique.DataSource;
+import edu.utils.errors.JDBCSQLExceptions;
 
 public class UserDao implements IUserDao {
 
     private Connection connection;
-
-    public UserDao() {
-    	 connection = DataSource.getInstance().getConnection();
-    	 }
+    private DataSource datasource;
     
+
+	public UserDao(DataSource dataSource) {
+		// TODO Auto-generated constructor stub
+		this.datasource = dataSource;
+	}
+
+	
+	private static final String SQL_UPDATE_INFO = "updated user set Nom=? , Prenom=? ,email=? ,login =?" ;
+	private static final String SQL_CREATE_USER = "insert into user values (?,?,?,?,?,?)";
+	private static final String SQL_AUTH_CHECK = "select * from user where login =? and password =?";
+	private static final String SQL_FIND_BY_LOGIN = "select * from user where login =? ";
+
+
 	@Override
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
+		Connection connection = null;
+	    PreparedStatement ps = null;
+	    ResultSet valeursAutoGenerees = null;
 	try {
-		String req = "insert into user values (?,?,?,?,?,?)";
-		PreparedStatement ps = connection.prepareStatement(req);
-        ps.setInt(1, user.getId());
-        ps.setString(2, user.getNom());
-        ps.setString(3, user.getPrenom());
-        ps.setString(4, user.getEmail());
-        ps.setString(5, user.getLogin());
-        ps.setString(6, String.valueOf(user.getPassword()));
-        ps.executeUpdate();
-
+		connection = datasource.getConnection();
+		ps = InitialisePreparedStatement(connection, SQL_CREATE_USER, true,user.getId(), user.getNom(),user.getPrenom(), user.getEmail(),user.getLogin(),String.valueOf(user.getPassword()));
+		int statut = ps.executeUpdate();
+		if (statut ==0){
+			throw new JDBCSQLExceptions("Echec lors de la création de l'utilisateur, aucune ligne n'et ajouté à la table" );
+		}
+ 
 	} catch (Exception e) {
         Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, e);
 	}	
 	}
 
 	@Override
-	public boolean authentification (String login,String password) {
+    public boolean authentification (String login,String password) {
+		PreparedStatement ps = null; 
+		Connection connection = null;
 		try {
-			String req = "select * from user where login =? and password =?";
-			PreparedStatement ps;			
-			ps = connection.prepareStatement(req);
-	        ps.setString(1, login);
-	        ps.setString(2,password);
+			connection = datasource.getConnection();
+			ps = InitialisePreparedStatement(connection, SQL_AUTH_CHECK, true, login,password);
 	        ResultSet res = ps.executeQuery();
 	        if (res.next()) {
 	        	return true;
@@ -68,10 +78,10 @@ public class UserDao implements IUserDao {
 	public void updateUserInfo(User user) {
 		// TODO Auto-generated method stub
 		PreparedStatement ps = null; 
+		Connection connection = null;
 		try {
-			
-			String req = "updated user set Nom=? , Prenom=? ,email=? ,login =? ";
-			ps = InitialisePreparedStatement(connection, req, true, user.getNom(),user.getPrenom(),user.getEmail(),user.getLogin());
+			connection = datasource.getConnection();
+			ps = InitialisePreparedStatement(connection, SQL_UPDATE_INFO, true, user.getNom(),user.getPrenom(),user.getEmail(),user.getLogin());
 			int res  = ps.executeUpdate();
 			if (res==0) {
 				throw new RuntimeException("La mise à jours n'a pas été effectué");
@@ -120,16 +130,18 @@ public class UserDao implements IUserDao {
 	@Override
 	public User findUserByLogin(String login) {
 		// TODO Auto-generated method stub
+		PreparedStatement ps = null; 
+		Connection connection = null;
 		try {
-			String req = "SELECT * FROM `user` WHERE login =? ";
-			PreparedStatement ps;			
-			ps = connection.prepareStatement(req);
-	        ps.setString(1, login);
+			connection = datasource.getConnection();
+			ps = InitialisePreparedStatement(connection, SQL_FIND_BY_LOGIN, true, login);
 	        ResultSet res = ps.executeQuery();
+
 	        if (res.next()) {
 		       User user = new User(res.getInt("id"),res.getString("nom"),res.getString("prenom"),res.getString("email"),res.getString("login"),res.getString("profilepic"));
+		       System.out.println(user.getNom());
 		       return user;
-	        }
+		       	        }
 	        else {
 	        	return null;
 	        }

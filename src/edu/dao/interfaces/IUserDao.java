@@ -2,22 +2,21 @@ package edu.dao.interfaces;
 
 import java.util.List;
 import edu.entities.User;
+import edu.utils.errors.JDBCSQLExceptions;
 
 
 public interface IUserDao {
 
-	void addUser(User user);
+	void addUser(User user) throws JDBCSQLExceptions;
 
-    void updateUserInfo(User user);
+    void updateUserInfo(User user) throws JDBCSQLExceptions;
  
-    void updateProfilePic(User user,String path);
+    void removeUserByLogin(String login) throws JDBCSQLExceptions;
 
-    void removeUserByLogin(String login);
-
-    boolean authentification (String login,String password);
+    boolean authentification (String login,String password) throws JDBCSQLExceptions;
     
     List<User> findAll();
 
-    User findUserByLogin(String login);
+    User findUserByLogin(String login) throws JDBCSQLExceptions;
 
 }
