@@ -7,6 +7,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,9 +19,11 @@ import javax.swing.border.BevelBorder;
 
 
 import java.awt.Font;
-
+import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.Transparency;
 import java.awt.CardLayout;
 import javax.swing.border.EtchedBorder;
 
@@ -28,6 +31,9 @@ import javax.swing.border.CompoundBorder;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Home {
 
@@ -89,11 +95,46 @@ public class Home {
 		this.mainP = mainP;
 	}
 	
-	public void newPanel (JFrame frame1,JPanel NPanel){
-		frame1.getContentPane().add(NPanel);
-      //  System.out.println("in4");
-		//frame1.setVisible(false);
+	public static BufferedImage resizeImage (BufferedImage image, int areaWidth, int areaHeight) {
+	    float scaleX = (float) areaWidth / image.getWidth();
+	    float scaleY = (float) areaHeight / image.getHeight();
+	    float scale = Math.min(scaleX, scaleY);
+	    int w = Math.round(image.getWidth() * scale);
+	    int h = Math.round(image.getHeight() * scale);
+
+	    int type = image.getTransparency() == Transparency.OPAQUE ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+
+	    boolean scaleDown = scale < 1;
+
+	    if (scaleDown) {
+	        // multi-pass bilinear div 2
+	        int currentW = image.getWidth();
+	        int currentH = image.getHeight();
+	        BufferedImage resized = image;
+	        while (currentW > w || currentH > h) {
+	            currentW = Math.max(w, currentW / 2);
+	            currentH = Math.max(h, currentH / 2);
+
+	            BufferedImage temp = new BufferedImage(currentW, currentH, type);
+	            Graphics2D g2 = temp.createGraphics();
+	            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	            g2.drawImage(resized, 0, 0, currentW, currentH, null);
+	            g2.dispose();
+	            resized = temp;
+	        }
+	        return resized;
+	    } else {
+	        Object hint = scale > 2 ? RenderingHints.VALUE_INTERPOLATION_BICUBIC : RenderingHints.VALUE_INTERPOLATION_BILINEAR;
+
+	        BufferedImage resized = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+	        Graphics2D g2 = resized.createGraphics();
+	        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
+	        g2.drawImage(image, 0, 0, w, h, null);
+	        g2.dispose();
+	        return resized;
+	    }
 	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -219,10 +260,20 @@ public class Home {
 		
 
 		final JLabel lblNewLabel_2 = new JLabel("");
-		
-		panel.add(lblNewLabel_2);
+		File newI = new File("./src/edu/utils/homebackground4.jpg");
+		BufferedImage newIBuff;
+		try {
+			newIBuff = ImageIO.read(newI);
+			BufferedImage NewIm = resizeImage(newIBuff,round(dim.getWidth()), round(dim.getHeight()));
+			lblNewLabel_2.setIcon(new ImageIcon(NewIm));
+			panel.add(lblNewLabel_2);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-		lblNewLabel_2.setIcon(new ImageIcon("./src/edu/utils/homebackground3.jpg"));
+		//lblNewLabel_2.setIcon(new ImageIcon(newIBuff.));
 		lblNewLabel_2.setHorizontalTextPosition(JLabel.CENTER);
 		lblNewLabel_2.setVerticalAlignment(JLabel.CENTER);
 		lblNewLabel_2.setHorizontalAlignment(JLabel.CENTER);

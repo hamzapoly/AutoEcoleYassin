@@ -2,7 +2,10 @@ package edu.gui;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.event.ActionEvent;
@@ -11,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,11 +30,15 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import edu.dao.classes.UserDao;
 import edu.entities.User;
+import sun.tools.tree.CaseStatement;
 
 public class InfoEdit {
 
@@ -42,6 +50,7 @@ public class InfoEdit {
 	private JLabel internalFrame;
 	private User user;
 	private UserDao userdao;
+	private Border defB ;
 	public JLabel getinternalFrame(){
 		return this.internalFrame;
 	}
@@ -55,12 +64,27 @@ public class InfoEdit {
 	public InfoEdit() throws IOException {
 		initialize();
 	}
-	public InfoEdit(User user) throws IOException {
+	public InfoEdit(User user,UserDao userdao) throws IOException {
 		this.user = user;
+		this.userdao = userdao;
 		initialize();
 	}
 	int round (double x) {
 		return (int) Math.round(x);
+	}
+	boolean verifform(JTextField...fields) {
+		boolean x=true;
+		
+		for (int i=0;i<fields.length;i++){
+			if ((fields[i].getText().equals(""))){
+				fields[i].setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+				x = false;
+				}
+			else {
+				fields[i].setBorder(defB);
+			}
+				
+			 }		return x;
 	}
 
 	/**
@@ -88,7 +112,7 @@ public class InfoEdit {
 		//internalFrame.setBackground(new Color(0,155,255));
 		internalFrame.setIcon(new ImageIcon("./src/edu/utils/backinfoedit.png"));
 		//frame.getContentPane().add(internalFrame, BorderLayout.CENTER);
-		internalFrame.setBounds(150, 150, round(screenSize.width*0.7), round(screenSize.height*0.8));
+		internalFrame.setBounds(150, 150, round(screenSize.width*0.5), round(screenSize.height*0.78));
 
 		JLabel lblNewLabel = new JLabel("الإسم");
 		lblNewLabel.setBackground(new Color(0,155,255));
@@ -167,33 +191,46 @@ public class InfoEdit {
 		textField_3.setBounds(textField_2.getLocation().x, textField_2.getLocation().y+60, 200, 26);
 		internalFrame.add(textField_3);
 		
-		JButton btnNewButton = new JButton("تأكيد");
+
+		final JButton btnNewButton = new JButton("تأكيد");
 		btnNewButton.setFont(new Font("Aldhabi", Font.BOLD, 27));
-		btnNewButton.setBounds(textField_3.getLocation().x-100, textField_3.getLocation().y+30, 99, 34);
-		/*btnNewButton.addActionListener(new ActionListener() {
-			
+		btnNewButton.setBounds(internalFrame.getLocation().x, round(internalFrame.getLocation().y+internalFrame.getHeight()*0.27), 99, 34);
+		System.out.println(internalFrame.getLocation().getY()+" "+screenSize.getHeight()+" "+internalFrame.getHeight());
+		defB = textField.getBorder();
+		btnNewButton.addActionListener(new ActionListener() {
+	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if verif(textField.getText()) {
-					if verif(textField_1.getText()) {
-						if verif(textField_2.getText()) {
-							if verif(textField_3.getText()) {
-								user.setNom(textField.getText());
-								user.setPrenom(textField_1.getText());
-								user.setEmail(textField_2.getText());
-								user.setLogin(textField_3.getText());
-								userdao.updateUserInfo(user);
-							} else throw  ("")
-						}
+					if (verifform(textField,textField_1,textField_2,textField_3)==true) {
+					user.setNom(textField.getText());
+					user.setPrenom(textField_1.getText());
+					user.setEmail(textField_2.getText());
+					user.setLogin(textField_3.getText());
+					System.out.println(user.getPrenom());
+					userdao.updateUserInfo(user);
+					JLabel erreur = new JLabel("تم تغيير البيانات بنجاح");
+					erreur.setHorizontalAlignment(SwingConstants.RIGHT);
+					erreur.setFont(new Font("Andalus", Font.PLAIN, 26));
+					erreur.setForeground(Color.GREEN);
+					erreur.setBounds(textField_3.getLocation().x+100, btnNewButton.getLocation().y, 180, 40);
+					internalFrame.add(erreur);
+					internalFrame.repaint();
+
 					}
+					else 		{
+						JLabel erreur = new JLabel("! هناك خانات فارغة الرجاء التثبت");
+						erreur.setHorizontalAlignment(SwingConstants.RIGHT);
+						erreur.setFont(new Font("Andalus", Font.PLAIN, 26));
+						erreur.setForeground(Color.RED);
+						erreur.setBounds(textField_3.getLocation().x+100, btnNewButton.getLocation().y, 170, 40);
+						internalFrame.add(erreur);
+						internalFrame.repaint();
+					}
+
+
 				}
-				user.setNom(textField.getText());
-				user.setPrenom(textField_1.getText());
-				user.setEmail(textField_2.getText());
-				user.setLogin(textField_3.getText());
-			}
-		});*/
+		});
 		internalFrame.add(btnNewButton);
 	}
 }

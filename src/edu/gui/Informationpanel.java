@@ -95,6 +95,7 @@ public class Informationpanel {
 		return dest;
 
 	}
+
 	
 	public static BufferedImage resizeImage (BufferedImage image, int areaWidth, int areaHeight) {
 	    float scaleX = (float) areaWidth / image.getWidth();
@@ -135,10 +136,44 @@ public class Informationpanel {
 	        return resized;
 	    }
 	}
+	
+	
+	ImageIcon changePic(JLabel labelpic) {
+		JFileChooser fileChooser = new JFileChooser();	
+		fileChooser.setCurrentDirectory(new File("./src"));
+		int returnValue = fileChooser.showOpenDialog(null);
+		File dest = new File("./src/edu/utils/"+user.getLogin()+"/profile.png");
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+	       }
+          File selectedFile = fileChooser.getSelectedFile();
+			try {
+				FileUtils.copyFile(selectedFile, dest);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				File newI = new File(user.getProfilepic());
+				BufferedImage newIBuff = ImageIO.read(newI);
+			//	labelpic.setIcon(new ImageIcon(ImageIO.read(newI)));
+			//	File NewIm = imageresize(newI, newI, labelpic.getWidth(), labelpic.getHeight());
+			//	labelpic.setIcon(new ImageIcon(ImageIO.read(NewIm)));
+				BufferedImage NewIm = resizeImage(newIBuff, labelpic.getWidth(), labelpic.getHeight());
+				ImageIcon eNewImIcon = new ImageIcon(NewIm);
+				return eNewImIcon;
+				
+			} catch (IOException e1) {
+	// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return null;
+			}
+
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	/**
+	 * @throws IOException 
 	 * 
 	 */
 	private void initialize() {
@@ -167,7 +202,6 @@ public class Informationpanel {
 		lblNewLabel_1.setIcon(new ImageIcon("./src/edu/utils/statistics.png"));
 		double menuWidth = screenSize.getWidth()*0.19; 
 		double menuHeight = screenSize.getHeight()*0.08; 
-		InfoP.add(lblNewLabel_1);
 		
 		/*JLabel label = new JLabel("جدول السياقة");
 		label.setBorder(new MatteBorder(0, 2, 0, 0, (Color) new Color(0, 0, 255)));
@@ -185,7 +219,6 @@ public class Informationpanel {
 		label_1.setForeground(Color.white);
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setIcon(new ImageIcon("./src/edu/utils/calcode.png"));
-		InfoP.add(label_1);
 		
 		JLabel label_2 = new JLabel("بياناتى");
 		label_2.setBorder(new MatteBorder(0, 2, 0, 2, (Color) new Color(0, 0, 255)));
@@ -194,12 +227,11 @@ public class Informationpanel {
 		label_2.setForeground(Color.white);
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setIcon(new ImageIcon("./src/edu/utils/infoperso1.png"));
-		InfoP.add(label_2);
 		//Information Action
 		label_2.addMouseListener(new MouseAdapter() {
 		public void mouseClicked (MouseEvent e) {
 					try {
-					InfoP.add(new InfoEdit(user).getinternalFrame());
+					InfoP.add(new InfoEdit(user, userdao).getinternalFrame());
 					} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -220,62 +252,43 @@ public class Informationpanel {
 		label_3.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_3.setIcon(new ImageIcon("./src/edu/utils/home.png"));
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		InfoP.add(label_3);
-		
+
 		//ProfilePIC
 		final JLabel labelpic = new JLabel("");
 		labelpic.setBorder(new EtchedBorder(EtchedBorder.RAISED, Color.DARK_GRAY, Color.LIGHT_GRAY));
-		System.out.println(user.getProfilepic());
-		File newI = new File(user.getProfilepic());
-		try {
-			labelpic.setIcon(new ImageIcon(ImageIO.read(newI)));
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 		labelpic.setBounds(round(screenSize.width*0.75), round(screenSize.height*0.12), round(screenSize.width*0.09), round(screenSize.height*0.21));
 		labelpic.setFont(new Font("Aldhabi",Font.PLAIN,36));
 		labelpic.setForeground(Color.white);
 		labelpic.setOpaque(true);
 		labelpic.setBackground(Color.WHITE);
 		labelpic.setHorizontalAlignment(SwingConstants.CENTER);
-		InfoP.add(labelpic);
+
+		File newI = new File(user.getProfilepic());
+		BufferedImage newIBuff;
+		try {
+			newIBuff = ImageIO.read(newI);
+			BufferedImage NewIm = resizeImage(newIBuff, labelpic.getWidth(), labelpic.getHeight());
+			labelpic.setIcon(new ImageIcon(NewIm));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		
 		final JLabel changepic = new JLabel();
 		changepic.setBounds(labelpic.getLocation().x+labelpic.getWidth()-32,labelpic.getLocation().y+labelpic.getHeight()-16 , round(labelpic.getWidth()*0.4), round(labelpic.getHeight()*0.4));
+	
 		changepic.setIcon(new ImageIcon("./src/edu/utils/editpic.png"));
 		changepic.setToolTipText("إضغط هنا لتغيير الصورة");
-		InfoP.add(changepic);
-		InfoP.setComponentZOrder(label_3, 1);
+
 		changepic.addMouseListener(new MouseAdapter() {
 			public void mouseClicked (MouseEvent e) {
-					JFileChooser fileChooser = new JFileChooser();	
-					fileChooser.setCurrentDirectory(new File("./src"));
-					int returnValue = fileChooser.showOpenDialog(null);
-					File dest = new File("./src/edu/utils/"+user.getLogin()+"/profile.png");
-			        if (returnValue == JFileChooser.APPROVE_OPTION) {
-				       }
-			          File selectedFile = fileChooser.getSelectedFile();
-						try {
-							FileUtils.copyFile(selectedFile, dest);
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						try {
-							File newI = new File(user.getProfilepic());
-							BufferedImage newIBuff = ImageIO.read(newI);
-						//	labelpic.setIcon(new ImageIcon(ImageIO.read(newI)));
-						//	File NewIm = imageresize(newI, newI, labelpic.getWidth(), labelpic.getHeight());
-						//	labelpic.setIcon(new ImageIcon(ImageIO.read(NewIm)));
-							BufferedImage NewIm = resizeImage(newIBuff, labelpic.getWidth(), labelpic.getHeight());
-							ImageIcon eNewImIcon = new ImageIcon(NewIm);
-							labelpic.setIcon(eNewImIcon);
-										
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+							labelpic.setIcon(changePic(labelpic));
+							InfoP.remove(labelpic);
+							InfoP.add(labelpic);
+							InfoP.validate();
+							InfoP.repaint();
+							
 			}
 					public void mouseEntered(MouseEvent e) {
 						InfoP.setCursor(cursor);
@@ -308,6 +321,13 @@ public class Informationpanel {
 			label_1.setBounds(lblNewLabel_1.getLocation().x+10+round(menuWidth)+90, 5,round(menuWidth),round(menuHeight));
 			label_2.setBounds(label_1.getLocation().x+10+round(menuWidth)+90,5,round(menuWidth),round(menuHeight));
 			label_3.setBounds(label_2.getLocation().x+10+round(menuWidth),5,round(menuWidth),round(menuHeight)*2);
+			InfoP.add(changepic);
+			
+			InfoP.add(label_2);
+			InfoP.add(label_3);
+			InfoP.add(labelpic);
+			InfoP.add(lblNewLabel_1);
+			InfoP.add(label_1);
 
 			Canvas canvas = new Canvas();
 			canvas.setBackground(new Color(220, 20, 60));

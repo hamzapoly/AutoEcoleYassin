@@ -28,7 +28,7 @@ public class UserDao implements IUserDao {
 	}
 
 	
-	private static final String SQL_UPDATE_INFO = "updated user set Nom=? , Prenom=? ,email=? ,login =?" ;
+	private static final String SQL_UPDATE_INFO = "update user set  Prenom=?,Nom=?  ,email=? ,login =?" ;
 	private static final String SQL_CREATE_USER = "insert into user values (?,?,?,?,?,?)";
 	private static final String SQL_AUTH_CHECK = "select * from user where login =? and password =?";
 	private static final String SQL_FIND_BY_LOGIN = "select * from user where login =? ";
@@ -81,14 +81,14 @@ public class UserDao implements IUserDao {
 		Connection connection = null;
 		try {
 			connection = datasource.getConnection();
-			ps = InitialisePreparedStatement(connection, SQL_UPDATE_INFO, true, user.getNom(),user.getPrenom(),user.getEmail(),user.getLogin());
+			ps = InitialisePreparedStatement(connection, SQL_UPDATE_INFO, true, user.getPrenom(),user.getNom(),user.getEmail(),user.getLogin());
 			int res  = ps.executeUpdate();
 			if (res==0) {
 				throw new RuntimeException("La mise à jours n'a pas été effectué");
 			}
 			} catch (SQLException e) {
 					// TODO: handle exception
-				throw new RuntimeException(e);
+				throw new RuntimeException("Une erreur de mise à jour");
 				}
 	}
 	
