@@ -24,7 +24,6 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Transparency;
-import java.awt.CardLayout;
 import javax.swing.border.EtchedBorder;
 
 import javax.swing.border.CompoundBorder;
@@ -147,12 +146,12 @@ public class Home {
 		//frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame1.getContentPane().setLayout(new CardLayout(0, 0));
 		Color borderc = new Color(79, 139, 156);
-		UIManager UI = new UIManager();
+		/*UIManager UI = new UIManager();
 		UIManager.put("OptionPane.background",borderc);
-		UIManager.put("Panel.background", borderc);
-
+		UIManager.put("Panel.background", borderc);*/
+		
 		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
-		Dimension dim = toolkit.getScreenSize();
+		final Dimension dim = toolkit.getScreenSize();
 		int width = (int) dim.getWidth();
 		int height = (int) dim.getHeight();
 		
@@ -162,7 +161,7 @@ public class Home {
 		panel.setBackground(Color.WHITE);
 		panel.setForeground(new Color(230, 230, 250));
 		final Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
-
+		
 		//frame1.getContentPane().add(panel, "name_1483415348374009");
 		panel.setLayout(null);
 		Insets insets = panel.getInsets();
@@ -203,7 +202,7 @@ public class Home {
 
 		final User user = userdao.findUserByLogin(username);
 		final JLabel label_6 = new JLabel("");
-		label_6.setBounds(round(dim.width*0.88), 0, 134, 88);
+		label_6.setBounds(round(dim.width*0.88), 200, 134, 88);
 		label_6.setHorizontalTextPosition(JLabel.CENTER);
 		label_6.setVerticalTextPosition(JLabel.CENTER);
 		label_6.setText(user.getPrenom()+" "+user.getNom());
@@ -238,6 +237,64 @@ public class Home {
 		label_1.setBounds(1071 , 26, 120, 120);
 		panel.add(label_1);
 		
+		
+		final JLabel close= new JLabel("");
+		final JLabel close1= new JLabel("");
+
+		close.setLocation(dim.width-50 , 20);
+		close1.setLocation(dim.width-50 , 20);
+
+		BufferedImage closeI = null;
+
+		try {
+			closeI = ImageIO.read(new File("./src/edu/utils/exitFullscreen.png"));
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		closeI = resizeImage(closeI, 50, 20);
+		close.setSize(closeI.getWidth(),closeI.getHeight());
+		final ImageIcon imgclose = new ImageIcon(closeI);
+		close.setIcon(imgclose);
+		panel.add(close);
+		close.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				panel.setCursor(cursor);
+				BufferedImage closeI1 = null;
+				try {
+				closeI1 = ImageIO.read(new File("./src/edu/utils/exitFullscreen1.png"));
+				} catch (IOException e3) {
+					// TODO: handle exception
+					e3.printStackTrace();
+				}
+				closeI1 = resizeImage(closeI1, 55, 25);
+				ImageIcon imgclose1 = new ImageIcon(closeI1);
+				close1.setIcon(imgclose1);
+				close1.setSize(closeI1.getWidth(),closeI1.getHeight());
+				panel.remove(close);
+				panel.add(close1, 5);
+				panel.repaint();
+				close1.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						panel.setCursor(Cursor.getDefaultCursor());
+						panel.remove(close1);
+						panel.add(close,5);
+						panel.repaint();
+					}
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						frame1.getFrame().dispose();
+					}
+				});
+			}
+			
+	
+		});
 		final JButton label_2 = new JButton("");
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
@@ -258,9 +315,9 @@ public class Home {
 		label_2.setBounds(905 , 26, 120, 120);
 		panel.add(label_2);
 		
-
+		
 		final JLabel lblNewLabel_2 = new JLabel("");
-		File newI = new File("./src/edu/utils/homebackground4.jpg");
+		File newI = new File("./src/edu/utils/HomeBackground.png");
 		BufferedImage newIBuff;
 		try {
 			newIBuff = ImageIO.read(newI);
@@ -280,6 +337,7 @@ public class Home {
 		
 		lblNewLabel_2.setBounds(0, 0, width, height);
 		
+
 		JLabel lblNewLabel_1 = new JLabel("الدروس");
 		lblNewLabel_1.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -303,6 +361,19 @@ public class Home {
 		label_5.setFont(new Font("Simplified Arabic", Font.BOLD, 20));
 		label_5.setBounds(1071, 149, 120, 23);
 		panel.add(label_5);
+		
+		BufferedImage imageB = null;
+		JLabel labelIcon = new JLabel();
+		try {
+			imageB = ImageIO.read(new File("./src/edu/utils/iconFrame1.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		labelIcon.setBounds(round(dim.width*0.01) , 10, 60, 60);
+		imageB = resizeImage(imageB, 60, 60);
+		labelIcon.setIcon(new ImageIcon(imageB));
+		panel.add(labelIcon,5);
 		this.mainP = panel;
 		this.frame1.newPanel(panel);
 		//this.frame1.getFrame().getContentPane().add(panel);

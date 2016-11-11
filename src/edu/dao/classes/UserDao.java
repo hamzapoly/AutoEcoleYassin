@@ -139,7 +139,6 @@ public class UserDao implements IUserDao {
 
 	        if (res.next()) {
 		       User user = new User(res.getInt("id"),res.getString("nom"),res.getString("prenom"),res.getString("email"),res.getString("login"),res.getString("profilepic"));
-		       System.out.println(user.getNom());
 		       return user;
 		       	        }
 	        else {

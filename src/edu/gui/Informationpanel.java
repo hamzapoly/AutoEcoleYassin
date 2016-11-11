@@ -58,7 +58,6 @@ public class Informationpanel {
 		initialize();
 	}
 	public MainFrame getFrame() {
-		System.out.println("Je t'aimes");
 		return frame1;
 	}
 
