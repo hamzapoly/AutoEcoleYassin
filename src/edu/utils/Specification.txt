@@ -1,0 +1,3 @@
+Poursuivre la réponse fausse et voir les consequences
+
+Animation voiture barre progression , avec finish et les traces du voiture à chaque réponse,(si possible bar qui s'ouvre et se ferme)

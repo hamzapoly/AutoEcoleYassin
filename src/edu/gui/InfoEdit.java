@@ -113,7 +113,6 @@ public class InfoEdit {
 		internalFrame.setIcon(new ImageIcon("./src/edu/utils/backinfoedit.png"));
 		//frame.getContentPane().add(internalFrame, BorderLayout.CENTER);
 		internalFrame.setBounds(150, 150, round(screenSize.width*0.5), round(screenSize.height*0.78));
-
 		JLabel lblNewLabel = new JLabel("الإسم");
 		lblNewLabel.setBackground(new Color(0,155,255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);

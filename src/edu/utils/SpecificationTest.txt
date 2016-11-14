@@ -1,0 +1,40 @@
+validate {
+         check answer from suggestions
+		 if correct {
+					statistique calculation
+					save question + answer
+					
+					number increment
+					
+					QuestPanel.remove
+					QuestPanel.Add new Question
+					
+					SuggesPanel.get(Questions's suggestions)
+					
+					ProgressPanel.add car step up animation  + new green trace created in its place
+					
+					Audio of success
+					
+					details recomendation button}
+			else{  
+					statistique calculation
+					save question + answer
+					
+					number increment
+					
+					QuestPanel.remove
+					QuestPanel.Add new Question
+					
+					SuggesPanel.get(Questions's suggestions)
+					
+					ProgressPanel.add car step up animation  + new Red trace created in its place
+					
+					Audio of failure
+					
+					Suggestion for details 
+
+			}
+			
+	      }
+
+Answer/Suggestions/Statistique/Question/Number quest/green car/red car/Details

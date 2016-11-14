@@ -31,9 +31,10 @@ import javax.swing.border.MatteBorder;
 
 import org.apache.commons.io.FileUtils;
 
-
 import edu.dao.classes.UserDao;
 import edu.entities.User;
+import net.coobird.thumbnailator.Thumbnails;
+
 import javax.swing.border.EtchedBorder;
 
 public class Informationpanel {
@@ -146,25 +147,35 @@ public class Informationpanel {
 	       }
           File selectedFile = fileChooser.getSelectedFile();
 			try {
-				FileUtils.copyFile(selectedFile, dest);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			try {
 				File newI = new File(user.getProfilepic());
-				BufferedImage newIBuff = ImageIO.read(newI);
-			//	labelpic.setIcon(new ImageIcon(ImageIO.read(newI)));
-			//	File NewIm = imageresize(newI, newI, labelpic.getWidth(), labelpic.getHeight());
-			//	labelpic.setIcon(new ImageIcon(ImageIO.read(NewIm)));
-				BufferedImage NewIm = resizeImage(newIBuff, labelpic.getWidth(), labelpic.getHeight());
-				ImageIcon eNewImIcon = new ImageIcon(NewIm);
-				return eNewImIcon;
+				FileUtils.copyFile(selectedFile, dest);
+				BufferedImage newIBuff =
+							Thumbnails.of(newI)
+							.size(labelpic.getWidth(), labelpic.getHeight())
+							.outputFormat("jpg")
+							.asBufferedImage();
+					ImageIcon eNewImIcon = new ImageIcon(newIBuff);
+					return eNewImIcon;
+			
 				
 			} catch (IOException e1) {
 	// TODO Auto-generated catch block
-				e1.printStackTrace();
-				return null;
+				File newI = new File("./src/edu/utils/errors/ErrorImage.png");
+				try {
+					BufferedImage newIBuff =
+							Thumbnails.of(newI)
+							.size(labelpic.getWidth(), labelpic.getHeight())
+							.outputFormat(".jpg")
+							.asBufferedImage();
+					ImageIcon eNewImIcon = new ImageIcon(newIBuff);
+					return eNewImIcon;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					new RuntimeException("Upload and resize error message issue");
+					return null;
+				}
+
+				
 			}
 
 	}
@@ -193,7 +204,7 @@ public class Informationpanel {
 		InfoP.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("الإحصائيات");
-		lblNewLabel_1.setBorder(new MatteBorder(0, 2, 0, 2,(Color) new Color(0, 0, 255)));
+		//lblNewLabel_1.setBorder(new MatteBorder(0, 2, 0, 2,(Color) new Color(0, 0, 255)));
 		//lblNewLabel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY));
 		lblNewLabel_1.setFont(new Font("Aldhabi", Font.PLAIN, 36));
 		lblNewLabel_1.setForeground(Color.white);
@@ -212,7 +223,7 @@ public class Informationpanel {
 		InfoP.add(label);*/
 		
 		JLabel label_1 = new JLabel("جدول الدروس");
-		label_1.setBorder(new MatteBorder(0, 2, 0, 2, (Color) new Color(0, 0, 255)));
+		label_1.setBorder(new MatteBorder(0, 2, 0, 2, Color.LIGHT_GRAY));
 		//label_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY));
 		label_1.setFont(new Font("Aldhabi", Font.PLAIN, 36));
 		label_1.setForeground(Color.white);
@@ -220,7 +231,7 @@ public class Informationpanel {
 		label_1.setIcon(new ImageIcon("./src/edu/utils/calcode.png"));
 		
 		JLabel label_2 = new JLabel("بياناتى");
-		label_2.setBorder(new MatteBorder(0, 2, 0, 2, (Color) new Color(0, 0, 255)));
+		//label_2.setBorder(new MatteBorder(0, 2, 0, 2, (Color) new Color(0, 0, 255)));
 		//label_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY));
 		label_2.setFont(new Font("Aldhabi",Font.PLAIN,36));
 		label_2.setForeground(Color.white);
@@ -302,7 +313,7 @@ public class Informationpanel {
 		label_3.addMouseListener(new MouseAdapter() {
 		public void mouseClicked (MouseEvent e) {
 				InfoP.removeAll();					
-				new Home(userdao,user.getLogin(),frame1);
+				new Home(userdao,user.getLogin(),frame1,0);
 				
 		}
 				public void mouseEntered(MouseEvent e) {
@@ -332,7 +343,7 @@ public class Informationpanel {
 			canvas.setBackground(new Color(220, 20, 60));
 			canvas.setBounds(0, 0, 264, screenSize.height);
 			JLabel label_4 = new JLabel("");
-			label_4.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.RED));
+			//label_4.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.RED));
 			label_4.setOpaque(true);
 			label_4.setBounds(0, 0, screenSize.width,round(screenSize.height*0.1));
 			//label_4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, Color.GRAY));

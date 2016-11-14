@@ -2,6 +2,11 @@ package edu.gui;
 
 import java.awt.EventQueue;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 
@@ -24,11 +29,19 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import javax.swing.border.BevelBorder;
+
+import com.sun.tools.doclets.internal.toolkit.util.DocFinder.Input;
+
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import javax.swing.JButton;
 
@@ -192,13 +205,32 @@ public class Index {
 		lblNewLabel_msg.setFont(new Font("MO_Nawel",Font.CENTER_BASELINE,18));
 		lblNewLabel_msg.setForeground(Color.red);
 		//lblNewLabel_msg.setIcon(stopicon);
-		
+		AudioInputStream startUp = null;
+		try {
+			
+			startUp = AudioSystem.getAudioInputStream(new File("./src/edu/utils/Sounds/Starting.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(startUp);
+			clip.start();
+
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+		catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 if (userdao.authentification(username.getText(), password.getText())) {
 				frame.dispose();
 				//MainFrame window = new MainFrame();
-				new Home(userdao,username.getText(), new MainFrame(userdao,username.getText()));
+				new Home(userdao,username.getText(), new MainFrame(userdao,username.getText()),1);
 	
 				//window.getFrame().setVisible(true);
 				} 

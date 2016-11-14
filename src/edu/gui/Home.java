@@ -8,6 +8,11 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -40,7 +45,7 @@ public class Home {
 	private String username;
 	private JPanel mainP;
 	private UserDao userdao;
-
+	private int snd;
 
 	public String getUsername() {
 		return username;
@@ -72,7 +77,8 @@ public class Home {
 	public Home() {
 		initialize();
 	}
-	public Home(UserDao userdao,String username,MainFrame HFrame){
+	public Home(UserDao userdao,String username,MainFrame HFrame,int snd){
+		this.snd = snd;
 		this.userdao=userdao;
 		this.username = username;
 		this.frame1=HFrame;
@@ -207,7 +213,7 @@ public class Home {
 		label_6.setVerticalTextPosition(JLabel.CENTER);
 		label_6.setText(user.getPrenom()+" "+user.getNom());
 		label_6.setFont(new Font("Simplified Arabic", Font.PLAIN, 30));
-		panel.add(label_6);
+		//panel.add(label_6);
 	
 		final JButton label_1 = new JButton("");
 		label_1.addMouseListener(new MouseAdapter() {
@@ -374,12 +380,35 @@ public class Home {
 		imageB = resizeImage(imageB, 60, 60);
 		labelIcon.setIcon(new ImageIcon(imageB));
 		panel.add(labelIcon,5);
+		
+		if (snd == 1){
+		try {
+			
+			AudioInputStream startUp = AudioSystem.getAudioInputStream(new File("./src/edu/utils/Sounds/CarStarting.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(startUp);
+			clip.start();
+
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+		catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		}
+
+		
 		this.mainP = panel;
 		this.frame1.newPanel(panel);
 		//this.frame1.getFrame().getContentPane().add(panel);
 		frame1.getFrame().setVisible(true);
 	}
-
+		
 	private int round(double d) {
 		// TODO Auto-generated method stub
 		return (int) Math.round(d);
