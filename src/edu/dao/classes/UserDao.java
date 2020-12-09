@@ -28,10 +28,10 @@ public class UserDao implements IUserDao {
 	}
 
 	
-	private static final String SQL_UPDATE_INFO = "update user set  Prenom=?,Nom=?  ,email=? ,login =?" ;
-	private static final String SQL_CREATE_USER = "insert into user values (?,?,?,?,?,?)";
-	private static final String SQL_AUTH_CHECK = "select * from user where login =? and password =?";
-	private static final String SQL_FIND_BY_LOGIN = "select * from user where login =? ";
+	private static final String SQL_UPDATE_INFO = "update \"user\" set  Prenom=?,Nom=?  ,email=? ,login =?" ;
+	private static final String SQL_CREATE_USER = "insert into \"user\" values (?,?,?,?,?,?)";
+	private static final String SQL_AUTH_CHECK = "select * from \"user\" where login =? and password =?";
+	private static final String SQL_FIND_BY_LOGIN = "select * from \"user\" where login =? ";
 
 
 	@Override
